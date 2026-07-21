@@ -1,0 +1,40 @@
+{
+  // 基本設計MD変換パイプライン — 確定的門禁 Task
+  // 司令塔 chatmode が runTasks で "gate" を起動する。
+  // manifest / jobId は司令塔から入力（inputs）で受け渡す。
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "gate",
+      "type": "shell",
+      "command": "${env:JAVA_HOME}/bin/java",
+      "args": [
+        "-Dfile.encoding=UTF-8",
+        "08_編排/Gate.java",
+        "${input:manifest}",
+        "${input:jobId}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "manifest",
+      "type": "promptString",
+      "description": "manifest のパス（例: 08_編排/manifests/MOV_C_LIST.yaml）"
+    },
+    {
+      "id": "jobId",
+      "type": "promptString",
+      "description": "対象 Job id（例: S00, S01, S02, S03, S04）"
+    }
+  ]
+}
